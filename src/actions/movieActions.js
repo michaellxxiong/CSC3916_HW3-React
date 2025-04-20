@@ -52,7 +52,7 @@ export function fetchMovie(movieId) {
 
 export function fetchMovies() {
     return dispatch => {
-        return fetch(`https://csci3916-hw4-api.onrender.com/movies?reviews=true`, {
+        return fetch(`${env.REACT_APP_API_URL}/movies?reviews=true`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
