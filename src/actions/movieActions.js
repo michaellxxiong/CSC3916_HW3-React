@@ -51,8 +51,10 @@ export function fetchMovie(movieId) {
 }
 
 export function fetchAllMovies() {
+    const url = `${env.REACT_APP_API_URL}/movies?reviews=true`;
+    console.log("Fetching movies from:", url); // ✅ Add this
     return dispatch => {
-        return fetch(`${env.REACT_APP_API_URL}/movies?reviews=true`, {
+        return fetch(url, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -60,13 +62,17 @@ export function fetchAllMovies() {
                 'Authorization': localStorage.getItem('token')
             },
             mode: 'cors'
-        }).then((response) => {
+        })
+        .then((response) => {
             if (!response.ok) {
                 throw Error(response.statusText);
             }
-            return response.json()
-        }).then((res) => {
-            dispatch(moviesFetched(res));
-        }).catch((e) => console.log(e));
+            return response.json();
+        })
+        .then((res) => {
+            console.log("Movie response:", res); // ✅ Log full response
+            dispatch(moviesFetched(res.movies));
+        })
+        .catch((e) => console.log("FetchMovies Error:", e));
     }
 }
