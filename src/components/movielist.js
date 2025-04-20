@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMovies, setMovie } from "../actions/movieActions";
+import { fetchAllMovies, setMovie } from "../actions/movieActions";
 import { Link } from 'react-router-dom';
 import { Image, Nav, Carousel } from 'react-bootstrap';
 import { BsStarFill } from 'react-icons/bs';
@@ -15,7 +15,7 @@ function MovieList() {
     }, [movies]);
 
     useEffect(() => {
-        dispatch(fetchMovies());
+        dispatch(fetchAllMovies());
     }, [dispatch]);
 
     const handleSelect = (selectedIndex) => {

@@ -50,7 +50,7 @@ export function fetchMovie(movieId) {
     }
 }
 
-export function fetchMovies() {
+export function fetchAllMovies() {
     return dispatch => {
         return fetch(`${env.REACT_APP_API_URL}/movies?reviews=true`, {
             method: 'GET',
