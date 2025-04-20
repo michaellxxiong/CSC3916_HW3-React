@@ -32,36 +32,26 @@ function MovieList() {
     }
 
     return (
-      <div className="container mt-4">
-          <h2 className="text-center text-white mb-4">Movie List</h2>
-  
-          {/* JSON Output for Debugging */}
-          <pre className="text-white bg-dark p-3 rounded overflow-auto" style={{ maxHeight: "300px" }}>
-              {JSON.stringify(memoizedMovies, null, 2)}
-          </pre>
-  
-          {/* Carousel UI */}
-          <Carousel onSelect={handleSelect} className="bg-dark text-light p-4 rounded">
-              {memoizedMovies.map((movie) => (
-                  <Carousel.Item key={movie._id}>
-                      {/* Use Nav.Link with "as={Link}" to avoid nested anchors */}
-                      <Nav.Link
-                          as={Link}
-                          to={`/movie/${movie._id}`}
-                          onClick={() => handleClick(movie)}
-                      >
-                          <Image className="image" src={movie.imageUrl} thumbnail />
-                      </Nav.Link>
-                      <Carousel.Caption>
-                          <h3>{movie.title}</h3>
-                          <BsStarFill /> {movie.avgRating} &nbsp;&nbsp; {movie.releaseDate}
-                      </Carousel.Caption>
-                  </Carousel.Item>
-              ))}
-          </Carousel>
-      </div>
-  );
-  
+
+        <Carousel onSelect={handleSelect} className="bg-dark text-light p-4 rounded">
+          {memoizedMovies.map((movie) => (
+            <Carousel.Item key={movie._id}>
+              {/* Use Nav.Link with "as={Link}" to avoid nested anchors */}
+              <Nav.Link
+                as={Link}
+                to={`/movie/${movie._id}`}
+                onClick={() => handleClick(movie)}
+              >
+                <Image className="image" src={movie.imageUrl} thumbnail />
+              </Nav.Link>
+              <Carousel.Caption>
+                <h3>{movie.title}</h3>
+                <BsStarFill className="text-warning"/> {movie.avgRating != null ? movie.avgRating.toFixed(2) : "N/A"} &nbsp;&nbsp; {movie.releaseDate}
+                </Carousel.Caption>
+            </Carousel.Item>
+          ))}
+        </Carousel>
+      );
     }
 
 export default MovieList;

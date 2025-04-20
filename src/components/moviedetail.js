@@ -5,6 +5,9 @@ import { Card, ListGroup, ListGroupItem, Image } from 'react-bootstrap';
 import { BsStarFill } from 'react-icons/bs';
 import { useParams } from 'react-router-dom'; // Import useParams
 
+import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+
 const MovieDetail = () => {
   const dispatch = useDispatch();
   const { movieId } = useParams(); // Get movieId from URL parameters
@@ -37,7 +40,7 @@ const MovieDetail = () => {
           <Image className="image" src={selectedMovie.imageUrl} thumbnail />
         </Card.Body>
         <ListGroup>
-          <ListGroupItem>{selectedMovie.title}</ListGroupItem>
+          <ListGroupItem><b>{selectedMovie.title}</b></ListGroupItem>
           <ListGroupItem>
             {selectedMovie.actors.map((actor, i) => (
               <p key={i}>
@@ -47,18 +50,28 @@ const MovieDetail = () => {
           </ListGroupItem>
           <ListGroupItem>
             <h4>
-              <BsStarFill /> {selectedMovie.avgRating}
+              <BsStarFill className="text-warning"/> {selectedMovie.avgRating != null ? selectedMovie.avgRating.toFixed(2) : "N/A"}
             </h4>
           </ListGroupItem>
         </ListGroup>
-        <Card.Body>
-          {selectedMovie.reviews.map((review, i) => (
-            <p key={i}>
-              <b>{review.username}</b>&nbsp; {review.review} &nbsp; <BsStarFill />{' '}
-              {review.rating}
-            </p>
-          ))}
+        <Card.Body className="bg-white text-dark rounded">
+          <h5 className="mb-3">Reviews</h5>
+          {selectedMovie.reviews && selectedMovie.reviews.length > 0 ? (
+            selectedMovie.reviews.map((review, i) => (
+              <p key={i} className="mb-2">
+                <b>{review.username}</b>: {review.review} &nbsp;
+                <BsStarFill className="text-warning" /> {review.rating}
+              </p>
+            ))
+          ) : (
+            <p>No reviews yet.</p>
+          )}
         </Card.Body>
+
+        <Link to={`/movie/${selectedMovie._id}/review`}>
+          <Button variant="outline-light" className="mt-3">Write a Review</Button>
+        </Link>
+        
       </Card>
     );
   };

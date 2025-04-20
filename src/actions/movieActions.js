@@ -45,14 +45,13 @@ export function fetchMovie(movieId) {
             }
             return response.json()
         }).then((res) => {
-            dispatch(movieFetched(res));
+            dispatch(movieFetched(res.movie));
         }).catch((e) => console.log(e));
     }
 }
 
 export function fetchAllMovies() {
     const url = `${env.REACT_APP_API_URL}/movies?reviews=true`;
-    console.log("Fetching movies from:", url); // ✅ Add this
     return dispatch => {
         return fetch(url, {
             method: 'GET',
@@ -70,7 +69,6 @@ export function fetchAllMovies() {
             return response.json();
         })
         .then((res) => {
-            console.log("Movie response:", res); // ✅ Log full response
             dispatch(moviesFetched(res.movies));
         })
         .catch((e) => console.log("FetchMovies Error:", e));
